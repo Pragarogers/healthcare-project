@@ -7,7 +7,7 @@ pipeline {
     stage('Git checkout') {
       steps {
            echo 'This is for cloning the gitrepo'
-           git branch: 'master', url: 'https://github.com/Balunideepak/healthcare-project.git'
+           git branch: 'master', url: 'https://github.com/Pragarogers/healthcare-project.git'
             }
           }
      stage('Maven Package') {
@@ -25,7 +25,7 @@ pipeline {
      stage('Docker Image Creation') {
       steps {
            echo 'This is for Docker image build'
-           sh 'docker build -t balunideepak/healthcare:latest .'
+           sh 'docker build -t pragarogers/healthcare:latest .'
             }
           }
      stage('Login to Dockerhub') {
@@ -33,13 +33,13 @@ pipeline {
              withCredentials([usernamePassword(credentialsId: 'dockeruser', passwordVariable: 'password', usernameVariable: 'username')]) {
           // withCredentials([usernameColonPassword(credentialsId: 'docker-id-user', variable: 'docker-all')]) {
           // withCredentials([string(credentialsId: 'dockercode', variable: 'dockervarcode')]) {
-           sh 'docker login -u balunideepak -p ${password}'
+           sh 'docker login -u pragarogers -p ${password}'
                          }
                    }
                }
      stage('Push the Docker image') {
       steps {
-        sh 'docker push balunideepak/healthcare:latest'
+        sh 'docker push pragarogers/healthcare:latest'
                                 }
             }
       stage('Ansible Playbook') {
